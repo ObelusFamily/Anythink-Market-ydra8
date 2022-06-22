@@ -17,6 +17,7 @@ printf "[=  ] Stashing any existing changes ... \n"
 git stash &> /dev/null
 
 printf "[== ] Resetting local 'main' branch to 'origin/main' ... \n"
+<<<<<<< HEAD
 git_output=$((git checkout main && git fetch origin main && git reset --hard origin/main) 2>&1 > /dev/null)
 git_exit_code=$?
 
@@ -26,6 +27,15 @@ then
    sendEvent false "$git_output"
    exit 1
 fi
+=======
+{
+  git checkout main && git fetch origin main && git reset --hard origin/main
+} &> /dev/null || {
+  printf "[==X] ERROR: Could not reset local 'main' branch. Aborting.\n"
+  sendEvent false "could not reset local main"
+  exit 1
+}
+>>>>>>> 1d3c0d7970ba8cefc8b7687b999902cb773b4cf2
 
 printf "[===] SUCCESS: Your local 'main' branch is now up to date with origin.\n"
 sendEvent true
